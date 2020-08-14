@@ -25,7 +25,7 @@ import org.joda.time.DateTimeConstants
 import java.util.concurrent.TimeUnit
 
 
-class FitService(private val context2: Context, private val permissionsService: PermissionsService) {
+class FitService(private val context: Context, private val permissionsService: PermissionsService) {
     var activity: BaseActivity? = null
 
     private val fitScope by lazy {
@@ -36,17 +36,17 @@ class FitService(private val context2: Context, private val permissionsService: 
     }
 
     private val client: GoogleSignInClient
-        get() = GoogleSignIn.getClient(activity!!, GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        get() = GoogleSignIn.getClient(context, GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .build())
 
     val googleAccount: GoogleSignInAccount?
-        get() = GoogleSignIn.getLastSignedInAccount(context2)
+        get() = GoogleSignIn.getLastSignedInAccount(context)
 
     val sessionClient: SessionsClient?
-        get() = googleAccount?.run { Fitness.getSessionsClient(context2, this) }
+        get() = googleAccount?.run { Fitness.getSessionsClient(context, this) }
 
     val historyClient: HistoryClient?
-        get() = googleAccount?.run { Fitness.getHistoryClient(context2, this) }
+        get() = googleAccount?.run { Fitness.getHistoryClient(context, this) }
 
     suspend fun readSleepData(): Result<List<SleepSession>> = withContext(Dispatchers.IO) {
         val now = System.currentTimeMillis()
@@ -91,7 +91,7 @@ class FitService(private val context2: Context, private val permissionsService: 
         val dataSource: DataSource = DataSource.Builder()
             .setType(DataSource.TYPE_RAW)
             .setDataType(DataType.TYPE_ACTIVITY_SEGMENT)
-            .setAppPackageName(activity!!)
+            .setAppPackageName(context)
             .build()
 
         var dataSet = DataSet.builder(dataSource)
@@ -126,7 +126,7 @@ class FitService(private val context2: Context, private val permissionsService: 
         val dataSource: DataSource = DataSource.Builder()
             .setType(DataSource.TYPE_RAW)
             .setDataType(DataType.TYPE_NUTRITION)
-            .setAppPackageName(activity!!)
+            .setAppPackageName(context)
             .build()
 
         val nutrients: MutableMap<String, Float> = HashMap()
@@ -180,7 +180,7 @@ class FitService(private val context2: Context, private val permissionsService: 
             else -> Failure(fitActionResult)
         }
         is Success -> Success(fitActionResult.value)
-        else -> when (val signInResult = signIn()) {
+        null -> when (val signInResult = signIn()) {
             is Failure -> Failure(signInResult)
             is Success -> wrapFitRequest(fitAction)
         }
