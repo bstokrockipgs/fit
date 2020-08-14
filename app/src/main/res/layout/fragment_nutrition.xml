@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.pgssoft.sleeptracker.ui.nutrition.NutritionViewModel" />
+        <variable
+            name="recyclerLifecycleOwner"
+            type="androidx.lifecycle.LifecycleOwner" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        tools:context=".ui.nutrition.NutritionFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:items="@{viewModel.nutritionRecords}"
+            app:itemLayout="@{@layout/list_item_nutrition_record}"
+            app:lifecycleOwner="@{recyclerLifecycleOwner}"/>
+
+    </RelativeLayout>
+
+</layout>

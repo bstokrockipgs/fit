@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.pgssoft.sleeptracker.ui.sleep.SleepFragment"
+        android:label="@string/title_sleep"
+        tools:layout="@layout/fragment_sleep" />
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.pgssoft.sleeptracker.ui.nutrition.NutritionFragment"
+        android:label="@string/title_nutrition"
+        tools:layout="@layout/fragment_nutrition" />
+</navigation>

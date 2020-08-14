@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.pgssoft.sleeptracker.ui.sleep.SleepActivityViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp">
+
+        <TextView
+            android:id="@+id/timeFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_marginStart="16dp"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            tools:text="sample text"
+            android:text="@{viewModel.startTimeString}"/>
+
+        <TextView
+            android:id="@+id/separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/timeFrom"
+            android:layout_toEndOf="@id/timeFrom"
+            android:textSize="16sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@android:color/white"
+            android:text="-"/>
+
+        <TextView
+            android:id="@+id/timeTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/separator"
+            android:layout_toEndOf="@id/separator"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:text="@{viewModel.endTimeString}"/>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            android:layout_marginEnd="16dp"
+            android:layout_alignParentEnd="true"
+            android:src="@{viewModel.isSynced ? @drawable/ic_sync : @drawable/ic_sync_disabled}"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#66FFFFFF"/>
+    </RelativeLayout>
+</layout>

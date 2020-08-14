@@ -1,0 +1,2 @@
+rootProject.name='SleepTracker'
+include ':app'
